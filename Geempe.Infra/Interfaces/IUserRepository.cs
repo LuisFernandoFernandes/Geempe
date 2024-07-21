@@ -1,5 +1,7 @@
-﻿namespace Geempe.Infra.Interfaces;
+﻿using Geempe.Domain.Entities;
 
-public interface IUserRepository
+namespace Geempe.Infra.Interfaces;
+
+public interface IUserRepository : IRepositoryBase<User>
 {
 }

@@ -1,5 +1,7 @@
-﻿namespace Geempe.Application.Interfaces;
+﻿using Geempe.Application.DTOs;
 
-public interface IUserService
+namespace Geempe.Application.Interfaces;
+
+public interface IUserService : IServiceBase<UserDTO>
 {
 }

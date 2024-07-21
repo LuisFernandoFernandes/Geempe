@@ -1,5 +1,8 @@
-﻿namespace Geempe.Application.Validators;
+﻿using FluentValidation;
+using Geempe.Application.DTOs;
 
-public class UserValidator
+namespace Geempe.Application.Validators;
+
+public class UserValidator : AbstractValidator<UserDTO>
 {
 }

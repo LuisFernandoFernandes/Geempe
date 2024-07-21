@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Geempe.Application\Geempe.Application.csproj" />
     <ProjectReference Include="..\Geempe.Infra\Geempe.Infra.csproj" />
   </ItemGroup>
 
