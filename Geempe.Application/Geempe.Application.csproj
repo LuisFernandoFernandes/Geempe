@@ -11,4 +11,9 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Geempe.Domain\Geempe.Domain.csproj" />
+    <ProjectReference Include="..\Geempe.Infra\Geempe.Infra.csproj" />
+  </ItemGroup>
+
 </Project>

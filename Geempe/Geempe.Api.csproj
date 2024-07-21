@@ -18,4 +18,10 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Geempe.Application\Geempe.Application.csproj" />
+    <ProjectReference Include="..\Geempe.Infra\Geempe.Infra.csproj" />
+    <ProjectReference Include="..\Geempe.IoC\Geempe.IoC.csproj" />
+  </ItemGroup>
+
 </Project>

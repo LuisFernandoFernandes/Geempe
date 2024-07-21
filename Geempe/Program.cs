@@ -1,3 +1,7 @@
+using Geempe.Api.Filters;
+using Geempe.Infra.Context;
+using Geempe.IoC;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
@@ -9,7 +13,7 @@ builder.Services.
 
 builder.Services.AddDbContext<AppDBContext>();
 
-builder.Services.AdicionarDependencias();
+builder.Services.AddDependencies();
 
 builder.Services.AddSwaggerGen();
 
