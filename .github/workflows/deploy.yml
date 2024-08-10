@@ -27,7 +27,7 @@ jobs:
         uses: docker/setup-buildx-action@v2
 
       - name: Build Docker image
-        run: docker build -t geempe-api:latest -f Geempe/Dockerfile .
+        run: docker build -t geempe-api:${{ github.sha }} -f Geempe/Dockerfile .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
@@ -36,10 +36,10 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
     
       - name: Tag Docker Image
-        run: docker tag geempe-api:latest ${{ secrets.DOCKER_USERNAME }}/geempe-api:latest
+        run: ddocker tag geempe-api:latest ${{ secrets.DOCKER_USERNAME }}/geempe-api:${{ github.sha }}
       
       - name: Push Docker image
-        run: docker push luisfernandofernandes/geempe-api:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/geempe-api:${{ github.sha }}
 
    #   - name: Deploy to server
     #    uses: appleboy/ssh-action@v0.1.3
