@@ -36,7 +36,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
     
       - name: Tag Docker Image
-        run: ddocker tag geempe-api:latest ${{ secrets.DOCKER_USERNAME }}/geempe-api:${{ github.sha }}
+        run: docker tag geempe-api:latest ${{ secrets.DOCKER_USERNAME }}/geempe-api:${{ github.sha }}
       
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/geempe-api:${{ github.sha }}
