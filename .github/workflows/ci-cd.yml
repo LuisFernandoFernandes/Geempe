@@ -43,3 +43,9 @@ jobs:
         
       - name: Publish Infra
         run: dotnet publish Geempe.Infra/Geempe.Infra.csproj --no-build --configuration Release --output ./publish/infra
+
+      - name: Upload Published Artifacts
+        uses: actions/upload-artifact@v3
+        with:
+         name: published-artifacts
+         path: ./publish
