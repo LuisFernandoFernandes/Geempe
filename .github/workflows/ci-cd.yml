@@ -30,7 +30,7 @@ jobs:
         run: dotnet test --no-build --verbosity normal --configuration Release
 
       - name: Publish API
-        run: dotnet publish Geempe.Api/Geempe.Api.csproj --no-build --configuration Release --output ./publish/api
+        run: dotnet publish Geempe/Geempe.Api.csproj --no-build --configuration Release --output ./publish/api
 
       - name: Publish Application
         run: dotnet publish Geempe.Application/Geempe.Application.csproj --no-build --configuration Release --output ./publish/application
