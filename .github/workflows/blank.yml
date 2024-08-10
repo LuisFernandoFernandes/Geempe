@@ -42,7 +42,7 @@ jobs:
         run: dotnet publish --no-build --configuration Release --output ./publish
 
       - name: Build Docker image
-        run: docker build -t LuisFernandoFernandes/geempe-api:${{ github.sha }} -f Geempe/Geempe/Dockerfile .
+        run: docker build -t LuisFernandoFernandes/geempe-api:${{ github.sha }} -f Geempe/Dockerfile .
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v2
