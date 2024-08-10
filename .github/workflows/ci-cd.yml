@@ -29,6 +29,17 @@ jobs:
       - name: Run tests
         run: dotnet test --no-build --verbosity normal --configuration Release
 
-      - name: Publish artifacts
-        if: success()
-        run: dotnet publish --no-build --configuration Release --output ./publish
+      - name: Publish API
+        run: dotnet publish Geempe.Api/Geempe.Api.csproj --no-build --configuration Release --output ./publish/api
+
+      - name: Publish Application
+        run: dotnet publish Geempe.Application/Geempe.Application.csproj --no-build --configuration Release --output ./publish/application
+      
+      - name: Publish Domain
+        run: dotnet publish Geempe.Domain/Geempe.Domain.csproj --no-build --configuration Release --output ./publish/domain
+
+      - name: Publish IoC
+        run: dotnet publish Geempe.IoC/Geempe.IoC.csproj --no-build --configuration Release --output ./publish/ioc
+        
+      - name: Publish Infra
+        run: dotnet publish Geempe.Infra/Geempe.Infra.csproj --no-build --configuration Release --output ./publish/infra
