@@ -10,11 +10,11 @@ COPY Geempe.Domain/Geempe.Domain.csproj Geempe.Domain/
 COPY Geempe.Infra/Geempe.Infra.csproj Geempe.Infra/
 COPY Geempe.IoC/Geempe.IoC.csproj Geempe.IoC/
 COPY Geempe.Test/Geempe.Test.csproj Geempe.Test/
-RUN dotnet restore
+RUN dotnet restore Geempe.sln
 
 # Copie o restante dos arquivos e compile a aplicação
 COPY . .
-RUN dotnet publish Geempe.sln -c Release -o /app/publish
+RUN dotnet publish Geempe.sln -c Release /app/publish
 
 # Use a imagem base do .NET Runtime para rodar a aplicação
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
