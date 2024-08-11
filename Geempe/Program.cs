@@ -4,6 +4,12 @@ using Geempe.IoC;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var port = Environment.GetEnvironmentVariable("ASPNETCORE_PORT") ?? "5000";
+builder.WebHost.ConfigureKestrel(serverOptions =>
+{
+    serverOptions.ListenAnyIP(int.Parse(port)); // Escuta na porta definida pela variável de ambiente
+});
+
 builder.Services.AddControllers();
 
 builder.Services.
