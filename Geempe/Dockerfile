@@ -14,7 +14,6 @@ RUN dotnet restore
 
 # Copie o restante dos arquivos e compile a aplicação
 COPY . .
-WORKDIR /src
 RUN dotnet publish Geempe.sln -c Release -o /app/publish
 
 # Use a imagem base do .NET Runtime para rodar a aplicação
