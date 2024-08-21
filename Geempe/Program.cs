@@ -13,7 +13,7 @@ builder.WebHost.ConfigureKestrel(serverOptions =>
 builder.Services.AddControllers();
 
 builder.Services.
-    AddControllers(options => options.Filtersa
+    AddControllers(options => options.Filters
     .Add(typeof(ModelStateValidatorFilter)))
     .ConfigureApiBehaviorOptions(options => { options.SuppressModelStateInvalidFilter = true; });
 
