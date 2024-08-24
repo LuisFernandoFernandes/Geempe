@@ -8,14 +8,16 @@ pr:
     include:
       - '*'
 
+pool:
+  vmImage: 'ubuntu-latest'
+
 stages:
   - stage: CI
     displayName: 'Continuous Integration'
     jobs:
       - job: BuildAndTest
         displayName: 'Build and Test Project'
-        pool:
-          vmImage: 'ubuntu-latest'
+       
         steps:
           - checkout: self
 
@@ -62,8 +64,6 @@ stages:
       - deployment: DeployToEnvironment
         displayName: 'Deploy to Production Environment'
         environment: 'Production'
-        pool:
-          vmImage: 'ubuntu-latest'
         strategy:
           runOnce:
             deploy:
