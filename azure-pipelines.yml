@@ -73,9 +73,7 @@ stages:
                 - task: Docker@2
                   inputs:
                     command: 'login'
-                    containerRegistry: '$(DOCKER_REGISTRY_SERVICE_CONNECTION)'
-                    username: '$(DOCKER_USERNAME)'
-                    password: '$(DOCKER_PASSWORD)'
+                    containerRegistry: 'DockerRegistry'
 
                 - script: |
                     IMAGE_TAG=$(DOCKER_USERNAME)/$(DOCKER_REPO):latest
