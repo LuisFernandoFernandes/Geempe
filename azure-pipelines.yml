@@ -1,0 +1,92 @@
+trigger:
+  branches:
+    include:
+      - '*'
+
+pr: 
+  branches:
+    include:
+      - '*'
+
+stages:
+  - stage: CI
+    displayName: 'Continuous Integration'
+    jobs:
+      - job: BuildAndTest
+        displayName: 'Build and Test Project'
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:
+          - checkout: self
+
+          - task: UseDotNet@2
+            inputs:
+              packageType: 'sdk'
+              version: '8.x'
+          
+          - script: dotnet restore
+            displayName: 'Restore dependencies'
+          
+          - script: dotnet build --no-restore --configuration Release
+            displayName: 'Build the project'
+          
+          - script: dotnet test --no-build --verbosity normal --configuration Release
+            displayName: 'Run tests'
+
+          - script: dotnet publish Geempe/Geempe.Api.csproj --no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/api
+            displayName: 'Publish API'
+          
+          - script: dotnet publish Geempe.Application/Geempe.Application.csproj --no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/application
+            displayName: 'Publish Application'
+          
+          - script: dotnet publish Geempe.Domain/Geempe.Domain.csproj --no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/domain
+            displayName: 'Publish Domain'
+          
+          - script: dotnet publish Geempe.IoC/Geempe.IoC.csproj --no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/ioc
+            displayName: 'Publish IoC'
+          
+          - script: dotnet publish Geempe.Infra/Geempe.Infra.csproj --no-build --configuration Release --output $(Build.ArtifactStagingDirectory)/infra
+            displayName: 'Publish Infra'
+          
+          - task: PublishBuildArtifacts@1
+            inputs:
+              PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+              ArtifactName: 'published-artifacts'
+              publishLocation: 'Container'
+
+  - stage: CD
+    displayName: 'Continuous Deployment'
+    dependsOn: CI
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/prod'))
+    jobs:
+      - deployment: DeployToEnvironment
+        displayName: 'Deploy to Production Environment'
+        environment: 'Production'
+        pool:
+          vmImage: 'ubuntu-latest'
+        strategy:
+          runOnce:
+            deploy:
+              steps:
+                - checkout: self
+                
+                - task: Docker@2
+                  inputs:
+                    command: 'login'
+                    containerRegistry: '$(DOCKER_REGISTRY_SERVICE_CONNECTION)'
+                    username: '$(DOCKER_USERNAME)'
+                    password: '$(DOCKER_PASSWORD)'
+
+                - script: |
+                    IMAGE_TAG=$(DOCKER_USERNAME)/$(DOCKER_REPO):latest
+                    echo "##vso[task.setvariable variable=IMAGE_TAG]$IMAGE_TAG"
+                  displayName: 'Set Docker image tag'
+
+                - task: Docker@2
+                  inputs:
+                    command: 'buildAndPush'
+                    repository: '$(DOCKER_USERNAME)/$(DOCKER_REPO)'
+                    Dockerfile: './Geempe/Dockerfile'
+                    tags: '$(IMAGE_TAG)'
+                    buildContext: '.'
+                    arguments: '--push'
