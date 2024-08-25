@@ -17,7 +17,6 @@ stages:
     jobs:
       - job: BuildAndTest
         displayName: 'Build and Test Project'
-       
         steps:
           - checkout: self
 
@@ -73,7 +72,7 @@ stages:
                 - task: Docker@2
                   inputs:
                     command: 'login'
-                    containerRegistry: 'DockerRegistry'
+                    containerRegistry: 'DockerRegistry'  # Nome do Service Connection
 
                 - script: |
                     IMAGE_TAG=$(DOCKER_USERNAME)/$(DOCKER_REPO):latest
