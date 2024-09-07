@@ -39,4 +39,26 @@ public class UserServiceTest
         var okResult = Assert.IsType<ServiceResult<ICollection<UserDTO>>>(result);
         Assert.True(okResult.IsSuccess);
     }
+
+    [Fact]
+    public async Task UserService_GetById_ShouldSucceed()
+    {
+        // Arrange
+        var repository = new Mock<IUserRepository>();
+        var mapper = new MapperConfiguration(x =>
+        {
+            x.AddProfile(new UserMappingProfile());
+        });
+        var _mapper = mapper.CreateMapper();
+        var service = new UserService(repository.Object, _mapper);
+
+        repository.Setup(repo => repo.GetById(1)).ReturnsAsync(new User(1, "lf", "a@a", "iaushasiuhs"));
+
+        // Act
+        var result = await service.GetById(1);
+
+        // Assert
+        var okResult = Assert.IsType<ServiceResult<UserDTO>>(result);
+        Assert.True(okResult.IsSuccess);
+    }
 }

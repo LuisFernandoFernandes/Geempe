@@ -16,20 +16,20 @@ public static class DependecyInjection
     public static IServiceCollection AddDependencies(this IServiceCollection services)
     {
         services.AddFluentValidationAutoValidation();
+
         services.AddDbContext<AppDBContext>(ServiceLifetime.Scoped);
 
-
         services.AddAutoMapper(typeof(UserMappingProfile));
+        services.AddAutoMapper(typeof(LoanMappingProfile));
+
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<ILoanRepository, LoanRepository>();
+
         services.AddScoped<IUserService, UserService>();
+        services.AddScoped<ILoanService, LoanService>();
+
         services.AddScoped<IValidator<UserDTO>, UserValidator>();
-
-
-        //services.AddScoped<IValidator<ContatoDTO>, ContatoValidator>();
-        //services.AddScoped<IContatoRepository, ContatoRepository>();
-        //services.AddScoped<IContatoService, ContatoService>();
-        //services.AddAutoMapper(typeof(ContatoMapingProfile));
-
+        services.AddScoped<IValidator<LoanDTO>, LoanValidator>();
 
         return services;
     }
