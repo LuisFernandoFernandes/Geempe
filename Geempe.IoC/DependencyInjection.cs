@@ -19,17 +19,25 @@ public static class DependecyInjection
 
         services.AddDbContext<AppDBContext>(ServiceLifetime.Scoped);
 
-        services.AddAutoMapper(typeof(UserMappingProfile));
         services.AddAutoMapper(typeof(LoanMappingProfile));
+        services.AddAutoMapper(typeof(LoanRequestMappingProfile));
+        services.AddAutoMapper(typeof(PaymentMappingProfile));
+        services.AddAutoMapper(typeof(UserMappingProfile));
 
-        services.AddScoped<IUserRepository, UserRepository>();
         services.AddScoped<ILoanRepository, LoanRepository>();
+        services.AddScoped<ILoanRequestRepository, LoanRequestRepository>();
+        services.AddScoped<IPaymentRepository, PaymentRepository>();
+        services.AddScoped<IUserRepository, UserRepository>();
 
-        services.AddScoped<IUserService, UserService>();
         services.AddScoped<ILoanService, LoanService>();
+        services.AddScoped<ILoanRequestService, LoanRequestService>();
+        services.AddScoped<IPaymentService, PaymentService>();
+        services.AddScoped<IUserService, UserService>();
 
-        services.AddScoped<IValidator<UserDTO>, UserValidator>();
         services.AddScoped<IValidator<LoanDTO>, LoanValidator>();
+        services.AddScoped<IValidator<LoanRequestDTO>, LoanRequestValidator>();
+        services.AddScoped<IValidator<PaymentDTO>, PaymentValidator>();
+        services.AddScoped<IValidator<UserDTO>, UserValidator>();
 
         return services;
     }
